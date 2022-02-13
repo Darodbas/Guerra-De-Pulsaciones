@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected int iRojo;
     protected int iFAzul;
     protected int iFRojo;
+    protected int prueba;
     protected int nPulsaciones;
     protected String SnPulsaciones;
     protected EditText etnPulsaciones;
