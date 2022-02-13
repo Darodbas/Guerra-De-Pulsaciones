@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
     tools:context=".MainActivity">
 
     <Button
@@ -160,7 +162,6 @@
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:rotation="90"
-        android:text="3"
         android:textColor="#00BC70"
         android:textSize="96sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"

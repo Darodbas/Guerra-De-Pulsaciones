@@ -2,6 +2,7 @@ package com.example.guerradepulsaciones;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.*;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -21,11 +22,86 @@ public class MainActivity extends AppCompatActivity {
     protected int estado;
     protected int iAzul;
     protected int iRojo;
+    protected int iFAzul;
+    protected int iFRojo;
     protected int nPulsaciones;
     protected String SnPulsaciones;
     protected EditText etnPulsaciones;
     protected   TextView tvNpulsaciones;
     protected TextView txCuentaAtras;
+
+
+
+
+    public void compruebaSalidaEnFalso(){
+
+
+
+    }
+
+
+    public void cuentaAtras(){
+
+
+
+        botonEmpezar.setVisibility(View.GONE);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                txCuentaAtras.setText("3");
+
+            }
+        }, 500);
+
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                txCuentaAtras.setText("2");
+
+            }
+        }, 1500);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                txCuentaAtras.setText("1");
+
+            }
+        }, 2500);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                txCuentaAtras.setText("¡YA!");
+
+            }
+        }, 3500);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                txCuentaAtras.setText("");
+                botonEmpezar.setVisibility(View.VISIBLE);
+                botonEmpezar.setText("Parar");
+                botonEmpezar.setBackgroundColor(Color.argb(255,255,0,0));
+                estado=1;
+            }
+        }, 3650);
+
+
+
+    }
+
+
+
+
 
 
 
@@ -79,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
             iAzul++;
             puntuacionAzul.setText(Integer.toString(iAzul));
             actualizaMensaje();
+        }else{
+            iFAzul++;
         }
 
     }
@@ -87,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
             iRojo++;
             puntuacionRojo.setText(Integer.toString(iRojo));
             actualizaMensaje();
+        }else{
+            iFRojo++;
         }
 
     }
@@ -102,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
             comentarios.setTextSize(25);
             iAzul=0;
             iRojo=0;
+            iFAzul=0;
+            iFRojo=0;
             puntuacionAzul.setText(Integer.toString(iAzul));
             puntuacionRojo.setText(Integer.toString(iRojo));
             estado=0;
@@ -110,14 +192,14 @@ public class MainActivity extends AppCompatActivity {
 
             etnPulsaciones.setVisibility(View.GONE);
             tvNpulsaciones.setVisibility(View.GONE);
+            iAzul=0;
+            iRojo=0;
+            iFAzul=0;
+            iFRojo=0;
 
-            txCuentaAtras.setText("3");
 
-            txCuentaAtras.setText("2");
+              cuentaAtras();
 
-            txCuentaAtras.setText("1");
-
-            txCuentaAtras.setText("YA");
 
             SnPulsaciones= etnPulsaciones.getText().toString();
             if(SnPulsaciones.length()>0) {
@@ -128,18 +210,19 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 nPulsaciones = 20;
             }
+
             etnPulsaciones.setText(Integer.toString(nPulsaciones));
 
-            iAzul=0;
-            iRojo=0;
+
+
             puntuacionAzul.setText(Integer.toString(iAzul));
             puntuacionRojo.setText(Integer.toString(iRojo));
             comentarios.setText("");
             comentarios.setTextColor(Color.BLACK);
             comentarios.setTextSize(25);
-            botonEmpezar.setText("Parar");
-            botonEmpezar.setBackgroundColor(Color.argb(255,255,0,0));
-            estado=1;
+            //botonEmpezar.setText("Parar");
+            //botonEmpezar.setBackgroundColor(Color.argb(255,255,0,0));
+            //estado=1;
             txCuentaAtras.setText("");
         }
 
@@ -154,6 +237,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         estado=0;
+        iRojo=0;
+        iAzul=0;
+        iFAzul=0;
+        iFRojo=0;
 
         puntuacionAzul = findViewById(R.id.marcAzul);
         puntuacionRojo = findViewById(R.id.marcRojo);
@@ -164,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
         etnPulsaciones = findViewById(R.id.etnPulsaciones);
         tvNpulsaciones = findViewById(R.id.npulsaciones);
         txCuentaAtras = findViewById(R.id.tx_cuentaAtras);
+
        botonEmpezar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
