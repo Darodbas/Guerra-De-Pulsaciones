@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected Guideline lineaMedia;
     protected TextView barraAzul;
     protected TextView barraRoja;
+    protected TextView objetivo;
 
 
 public void cambiarmodo(){
@@ -150,7 +151,7 @@ public void cambiarmodo(){
                 botonEmpezar.setText("Reiniciar");
                 botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
                 comentarios.setTextColor(Color.argb(255, 0, 0, 255));
-                comentarios.setTextSize(60);
+                comentarios.setTextSize(50);
                 cambioModo.setVisibility(View.VISIBLE);
                 estado = 0;
 
@@ -161,7 +162,7 @@ public void cambiarmodo(){
                 botonEmpezar.setText("Reiniciar");
                 botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
                 comentarios.setTextColor(Color.argb(255, 255, 0, 0));
-                comentarios.setTextSize(60);
+                comentarios.setTextSize(50);
                 cambioModo.setVisibility(View.VISIBLE);
                 estado = 0;
 
@@ -178,9 +179,10 @@ public void cambiarmodo(){
                 botonEmpezar.setText("Reiniciar");
                 botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
                 comentarios.setTextColor(Color.argb(255, 0, 0, 255));
-                comentarios.setTextSize(60);
+                comentarios.setTextSize(50);
                 cambioModo.setVisibility(View.VISIBLE);
                 estado = 0;
+                objetivo.setVisibility(View.GONE);
 
             }
 
@@ -191,9 +193,10 @@ public void cambiarmodo(){
                 botonEmpezar.setText("Reiniciar");
                 botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
                 comentarios.setTextColor(Color.argb(255, 255, 0, 0));
-                comentarios.setTextSize(60);
+                comentarios.setTextSize(50);
                 cambioModo.setVisibility(View.VISIBLE);
                 estado = 0;
+                objetivo.setVisibility(View.GONE);
 
             }
         }
@@ -253,94 +256,100 @@ public void cambiarmodo(){
 
     }
 
-    public void clickReset (){
+    public void clickReset () {
+
+
+        if (estado == 1) {
 
 
 
-        if(estado==1) {
-            etnPulsaciones.setVisibility(View.VISIBLE);
-            tvNpulsaciones.setVisibility(View.VISIBLE);
+            objetivo.setVisibility(View.GONE);
+
+            if (cambioModo.isChecked()) {
+                //
+            } else {
+                etnPulsaciones.setVisibility(View.VISIBLE);
+                tvNpulsaciones.setVisibility(View.VISIBLE);
+            }
+
+
+
             cambioModo.setVisibility(View.VISIBLE);
             botonEmpezar.setText("Empezar");
-            botonEmpezar.setBackgroundColor(Color.argb(255,0,214,87));
+            botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
             comentarios.setText("");
             comentarios.setTextColor(Color.BLACK);
             comentarios.setTextSize(25);
-            iAzul=0;
-            iRojo=0;
-            iFAzul=0;
-            iFRojo=0;
+            iAzul = 0;
+            iRojo = 0;
+            iFAzul = 0;
+            iFRojo = 0;
             puntuacionAzul.setText(Integer.toString(iAzul));
             puntuacionRojo.setText(Integer.toString(iRojo));
-            estado=0;
+            estado = 0;
             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
             params.guidePercent = 0.50f;
             lineaMedia.setLayoutParams(params);
 
 
-        }
-        else if(estado==0) {
+        } else if (estado == 0) {
 
-            etnPulsaciones.setVisibility(View.GONE);
-            tvNpulsaciones.setVisibility(View.GONE);
-            cambioModo.setVisibility(View.GONE);
-            iAzul=0;
-            iRojo=0;
-            iFAzul=0;
-            iFRojo=0;
+            iAzul = 0;
+            iRojo = 0;
+            iFAzul = 0;
+            iFRojo = 0;
             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
             params.guidePercent = 0.50f;
             lineaMedia.setLayoutParams(params);
 
 
-              cuentaAtras();
+            cuentaAtras();
 
 
-            SnPulsaciones= etnPulsaciones.getText().toString();
-            if(SnPulsaciones.length()>0) {
+            SnPulsaciones = etnPulsaciones.getText().toString();
+            if (SnPulsaciones.length() > 0) {
                 nPulsaciones = Integer.parseInt(SnPulsaciones);
                 if (nPulsaciones <= 0) {
                     nPulsaciones = 20;
                 }
-            }else{
+            } else {
                 nPulsaciones = 20;
             }
 
             etnPulsaciones.setText(Integer.toString(nPulsaciones));
 
 
-
             puntuacionAzul.setText(Integer.toString(iAzul));
             puntuacionRojo.setText(Integer.toString(iRojo));
             comentarios.setText("");
             comentarios.setTextColor(Color.BLACK);
             comentarios.setTextSize(25);
-            //botonEmpezar.setText("Parar");
-            //botonEmpezar.setBackgroundColor(Color.argb(255,255,0,0));
-            //estado=1;
             txCuentaAtras.setText("");
-        }
+            objetivo.setVisibility(View.VISIBLE);
+            etnPulsaciones.setVisibility(View.GONE);
+            tvNpulsaciones.setVisibility(View.GONE);
+            cambioModo.setVisibility(View.GONE);
 
 
-        if(cambioModo.isChecked()){
+
+        if (cambioModo.isChecked()) {
 
             puntuacionRojo.setVisibility(View.GONE);
             puntuacionAzul.setVisibility(View.GONE);
-            etnPulsaciones.setVisibility(View.GONE);
-            tvNpulsaciones.setVisibility(View.GONE);
             barraRoja.setVisibility(View.VISIBLE);
             barraAzul.setVisibility(View.VISIBLE);
+            objetivo.setVisibility(View.GONE);
 
-        }else{
+        } else {
             puntuacionRojo.setVisibility(View.VISIBLE);
             puntuacionAzul.setVisibility(View.VISIBLE);
-            etnPulsaciones.setVisibility(View.VISIBLE);
-            tvNpulsaciones.setVisibility(View.VISIBLE);
             barraRoja.setVisibility(View.GONE);
             barraAzul.setVisibility(View.GONE);
+            objetivo.setVisibility(View.VISIBLE);
+            objetivo.setText("objetivo: " + etnPulsaciones.getText().toString());
         }
 
-
+    }
     }
 
 
@@ -369,9 +378,7 @@ public void cambiarmodo(){
         cambioModo  = findViewById(R.id.swCambioModo);
         barraAzul = findViewById(R.id.Barra_Azul);
         barraRoja = findViewById(R.id.Barra_Roja);
-
-
-
+        objetivo =findViewById(R.id.tvObjeivo);
 
 
 
