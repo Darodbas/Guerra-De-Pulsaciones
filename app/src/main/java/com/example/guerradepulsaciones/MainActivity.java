@@ -1,6 +1,8 @@
 package com.example.guerradepulsaciones;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 
 import android.os.*;
 import android.graphics.Color;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
@@ -27,17 +30,34 @@ public class MainActivity extends AppCompatActivity {
     protected int nPulsaciones;
     protected String SnPulsaciones;
     protected EditText etnPulsaciones;
-    protected   TextView tvNpulsaciones;
+    protected TextView tvNpulsaciones;
     protected TextView txCuentaAtras;
+    protected Switch cambioModo;
+    protected Guideline lineaMedia;
+    protected TextView barraAzul;
+    protected TextView barraRoja;
 
 
+public void cambiarmodo(){
 
+    if(cambioModo.isChecked()){
 
-    public void compruebaSalidaEnFalso(){
+        puntuacionRojo.setVisibility(View.GONE);
+        puntuacionAzul.setVisibility(View.GONE);
+        etnPulsaciones.setVisibility(View.GONE);
+        tvNpulsaciones.setVisibility(View.GONE);
+        barraRoja.setVisibility(View.VISIBLE);
+        barraAzul.setVisibility(View.VISIBLE);
 
-
-
+    }else{
+        puntuacionRojo.setVisibility(View.VISIBLE);
+        puntuacionAzul.setVisibility(View.VISIBLE);
+        etnPulsaciones.setVisibility(View.VISIBLE);
+        tvNpulsaciones.setVisibility(View.VISIBLE);
+        barraRoja.setVisibility(View.GONE);
+        barraAzul.setVisibility(View.GONE);
     }
+}
 
 
     public void cuentaAtras(){
@@ -99,82 +119,148 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
     public void actualizaMensaje (){
-        if(iAzul<iRojo) {
-            comentarios.setTextColor(Color.argb(255,255,0,0));
-            comentarios.setText("va ganando Rojo");
+
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
 
 
 
-        }else if(iAzul>iRojo) {
-            comentarios.setTextColor(Color.argb(255,0,0,255));
-            comentarios.setText("va ganando Azul");
+            if (iAzul < iRojo ||params.guidePercent<0.5 ) {
+                comentarios.setTextColor(Color.argb(255, 255, 0, 0));
+                comentarios.setText("va ganando Rojo");
+
+
+            } else if (iAzul > iRojo||params.guidePercent>0.5) {
+                comentarios.setTextColor(Color.argb(255, 0, 0, 255));
+                comentarios.setText("va ganando Azul");
+
+            } else {
+                comentarios.setText("EMPATE");
+                comentarios.setTextColor(Color.BLACK);
+
+            }
+
+        if(cambioModo.isChecked()){
+
+
+
+            if(params.guidePercent >= 0.69f){
+
+                comentarios.setText("Ganador\n Azul");
+                botonEmpezar.setText("Reiniciar");
+                botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
+                comentarios.setTextColor(Color.argb(255, 0, 0, 255));
+                comentarios.setTextSize(60);
+                cambioModo.setVisibility(View.VISIBLE);
+                estado = 0;
+
+            }
+            if(params.guidePercent <= 0.31f){
+
+                comentarios.setText("Ganador\n Rojo");
+                botonEmpezar.setText("Reiniciar");
+                botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
+                comentarios.setTextColor(Color.argb(255, 255, 0, 0));
+                comentarios.setTextSize(60);
+                cambioModo.setVisibility(View.VISIBLE);
+                estado = 0;
+
+            }
+
+
 
         }else {
-            comentarios.setText("EMPATE");
-            comentarios.setTextColor(Color.BLACK);
 
-        }
+            if (iAzul == nPulsaciones) {
+                comentarios.setText("Ganador\n Azul");
+                etnPulsaciones.setVisibility(View.VISIBLE);
+                tvNpulsaciones.setVisibility(View.VISIBLE);
+                botonEmpezar.setText("Reiniciar");
+                botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
+                comentarios.setTextColor(Color.argb(255, 0, 0, 255));
+                comentarios.setTextSize(60);
+                cambioModo.setVisibility(View.VISIBLE);
+                estado = 0;
 
-        if(iAzul==nPulsaciones){
-            comentarios.setText("Ganador\n Azul");
-            etnPulsaciones.setVisibility(View.VISIBLE);
-            tvNpulsaciones.setVisibility(View.VISIBLE);
-            botonEmpezar.setText("Reiniciar");
-            botonEmpezar.setBackgroundColor(Color.argb(255,0,214,87));
-            comentarios.setTextColor(Color.argb(255,0,0,255));
-            comentarios.setTextSize(60);
-            estado=0;
+            }
 
-        }
+            if (iRojo == nPulsaciones) {
+                comentarios.setText("Ganador\n Rojo");
+                etnPulsaciones.setVisibility(View.VISIBLE);
+                tvNpulsaciones.setVisibility(View.VISIBLE);
+                botonEmpezar.setText("Reiniciar");
+                botonEmpezar.setBackgroundColor(Color.argb(255, 0, 214, 87));
+                comentarios.setTextColor(Color.argb(255, 255, 0, 0));
+                comentarios.setTextSize(60);
+                cambioModo.setVisibility(View.VISIBLE);
+                estado = 0;
 
-        if(iRojo==nPulsaciones){
-            comentarios.setText("Ganador\n Rojo");
-            etnPulsaciones.setVisibility(View.VISIBLE);
-            tvNpulsaciones.setVisibility(View.VISIBLE);
-            botonEmpezar.setText("Reiniciar");
-            botonEmpezar.setBackgroundColor(Color.argb(255,0,214,87));
-            comentarios.setTextColor(Color.argb(255,255,0,0));
-            comentarios.setTextSize(60);
-            estado=0;
-
+            }
         }
 
 
     }
-
 
     public void clickAzul (){
+
         if(estado==1) {
-            iAzul++;
-            puntuacionAzul.setText(Integer.toString(iAzul));
-            actualizaMensaje();
-        }else{
-            iFAzul++;
+
+
+            if(cambioModo.isChecked()){
+
+
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
+                params.guidePercent += 0.01f;
+                lineaMedia.setLayoutParams(params);
+                actualizaMensaje();
+
+
+            }else {
+
+
+                iAzul++;
+
+                puntuacionAzul.setText(Integer.toString(iAzul));
+                actualizaMensaje();
+            }
         }
 
     }
+
     public void clickRojo (){
+
+
         if(estado==1) {
-            iRojo++;
-            puntuacionRojo.setText(Integer.toString(iRojo));
-            actualizaMensaje();
-        }else{
-            iFRojo++;
+
+            if(cambioModo.isChecked()){
+
+
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
+                params.guidePercent -= 0.01f;
+                lineaMedia.setLayoutParams(params);
+                actualizaMensaje();
+
+
+            }else {
+
+
+                iRojo++;
+
+                puntuacionRojo.setText(Integer.toString(iRojo));
+                actualizaMensaje();
+            }
         }
 
     }
+
     public void clickReset (){
+
+
 
         if(estado==1) {
             etnPulsaciones.setVisibility(View.VISIBLE);
             tvNpulsaciones.setVisibility(View.VISIBLE);
+            cambioModo.setVisibility(View.VISIBLE);
             botonEmpezar.setText("Empezar");
             botonEmpezar.setBackgroundColor(Color.argb(255,0,214,87));
             comentarios.setText("");
@@ -187,15 +273,24 @@ public class MainActivity extends AppCompatActivity {
             puntuacionAzul.setText(Integer.toString(iAzul));
             puntuacionRojo.setText(Integer.toString(iRojo));
             estado=0;
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
+            params.guidePercent = 0.50f;
+            lineaMedia.setLayoutParams(params);
+
+
         }
         else if(estado==0) {
 
             etnPulsaciones.setVisibility(View.GONE);
             tvNpulsaciones.setVisibility(View.GONE);
+            cambioModo.setVisibility(View.GONE);
             iAzul=0;
             iRojo=0;
             iFAzul=0;
             iFRojo=0;
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) lineaMedia.getLayoutParams();
+            params.guidePercent = 0.50f;
+            lineaMedia.setLayoutParams(params);
 
 
               cuentaAtras();
@@ -227,6 +322,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        if(cambioModo.isChecked()){
+
+            puntuacionRojo.setVisibility(View.GONE);
+            puntuacionAzul.setVisibility(View.GONE);
+            etnPulsaciones.setVisibility(View.GONE);
+            tvNpulsaciones.setVisibility(View.GONE);
+            barraRoja.setVisibility(View.VISIBLE);
+            barraAzul.setVisibility(View.VISIBLE);
+
+        }else{
+            puntuacionRojo.setVisibility(View.VISIBLE);
+            puntuacionAzul.setVisibility(View.VISIBLE);
+            etnPulsaciones.setVisibility(View.VISIBLE);
+            tvNpulsaciones.setVisibility(View.VISIBLE);
+            barraRoja.setVisibility(View.GONE);
+            barraAzul.setVisibility(View.GONE);
+        }
+
+
     }
 
 
@@ -251,6 +365,15 @@ public class MainActivity extends AppCompatActivity {
         etnPulsaciones = findViewById(R.id.etnPulsaciones);
         tvNpulsaciones = findViewById(R.id.npulsaciones);
         txCuentaAtras = findViewById(R.id.tx_cuentaAtras);
+        lineaMedia = findViewById(R.id.guiaModo2);
+        cambioModo  = findViewById(R.id.swCambioModo);
+        barraAzul = findViewById(R.id.Barra_Azul);
+        barraRoja = findViewById(R.id.Barra_Roja);
+
+
+
+
+
 
        botonEmpezar.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -259,15 +382,12 @@ public class MainActivity extends AppCompatActivity {
            }
        });
 
-
-
         botonRojo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             clickRojo();
             }
         });
-
 
         botonAzul.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +396,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        cambioModo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cambiarmodo();
+            }
+        });
 
 
     }
